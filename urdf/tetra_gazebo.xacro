@@ -56,7 +56,7 @@
 
   <!-- Lidar sensor plugin (laser) -->
   <gazebo reference="laser">
-    <sensor name="lidar" type="lidar">
+    <sensor name="laser" type="gpu_lidar">
       <topic>scan</topic>
       <update_rate>10</update_rate>
       <frame_id>laser</frame_id>
@@ -87,7 +87,7 @@
 
   <!-- Second Lidar sensor plugin (laser_link2) -->
   <gazebo reference="laser_link2">
-    <sensor name="lidar2" type="lidar">
+    <sensor name="laser_link2" type="gpu_lidar">
       <topic>scan2</topic>
       <update_rate>10</update_rate>
       <frame_id>laser_link2</frame_id>
@@ -118,7 +118,7 @@
 
   <!-- IMU sensor (Gazebo Harmonic - attached to imu_link) -->
   <gazebo reference="imu_link">
-    <sensor name="imu_sensor" type="imu">
+    <sensor name="imu_link" type="imu">
       <always_on>1</always_on>
       <update_rate>100</update_rate>
       <visualize>true</visualize>

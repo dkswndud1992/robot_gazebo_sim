@@ -11,6 +11,7 @@ echo ""
 # 환경 설정
 source /opt/ros/jazzy/setup.bash
 source ~/ros2_ws/install/setup.bash
+source ~/test/tetra_gazebo_sim/install/setup.bash
 
 # 1. 패키지 확인
 echo "1. 패키지 확인 중..."

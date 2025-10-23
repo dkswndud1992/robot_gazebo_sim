@@ -154,12 +154,14 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
+            '/tf@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V',
+            '/tf_static@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V',
             # cmd_vel: Bidirectional (use ] for bidirectional bridge)
             '/model/tetra/cmd_vel@geometry_msgs/msg/Twist]ignition.msgs.Twist',
             # All others: Gazebo -> ROS (use @ for unidirectional Gazebo to ROS)
             '/model/tetra/odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
             '/scan@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
-            '/scan2@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
+            #'/scan2@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
             '/imu@sensor_msgs/msg/Imu@ignition.msgs.IMU',
             '/camera/image_raw@sensor_msgs/msg/Image@ignition.msgs.Image',
             '/camera/color/image_raw@sensor_msgs/msg/Image@ignition.msgs.Image',
@@ -170,20 +172,6 @@ def generate_launch_description():
         remappings=[
             ('/model/tetra/odometry', '/odom'),
             ('/model/tetra/cmd_vel', '/cmd_vel')
-        ],
-        output='screen',
-        parameters=[{
-            'use_sim_time': LaunchConfiguration('use_sim_time')
-        }]
-    )
-
-    # TF bridge for coordinate frames
-    tf_bridge = Node(
-        package='ros_gz_bridge',
-        executable='parameter_bridge',
-        arguments=[
-            '/tf@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V',
-            '/tf_static@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V'
         ],
         output='screen',
         parameters=[{
@@ -203,28 +191,6 @@ def generate_launch_description():
         condition=LaunchConfigurationNotEquals('use_fake_imu', 'false')
     )
 
-    # Static transform for LiDAR frame (Gazebo uses nested frame names)
-    # This creates an identity transform so RViz can find the frame
-    static_tf_laser = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_tf_laser',
-        arguments=['--frame-id', 'laser', '--child-frame-id', 'tetra/base_footprint/lidar'],
-        parameters=[{
-            'use_sim_time': LaunchConfiguration('use_sim_time')
-        }]
-    )
-
-    static_tf_laser2 = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_tf_laser2',
-        arguments=['--frame-id', 'laser_link2', '--child-frame-id', 'tetra/base_footprint/lidar2'],
-        parameters=[{
-            'use_sim_time': LaunchConfiguration('use_sim_time')
-        }]
-    )
-
     return LaunchDescription([
         # Set environment variables first
         gz_resource_path,
@@ -241,7 +207,7 @@ def generate_launch_description():
         yaw_arg,
         DeclareLaunchArgument(
             'use_fake_imu',
-            default_value='true',
+            default_value='false',
             description='Use fake IMU publisher if Gazebo IMU does not work'
         ),
         
@@ -251,8 +217,5 @@ def generate_launch_description():
         # joint_state_publisher removed - Gazebo plugin handles this
         spawn_robot,
         ros_gz_bridge,
-        tf_bridge,
-        fake_imu_publisher,
-        static_tf_laser,
-        static_tf_laser2
+        #fake_imu_publisher,
     ])
