@@ -191,6 +191,15 @@ def generate_launch_description():
         condition=LaunchConfigurationNotEquals('use_fake_imu', 'false')
     )
 
+    # PowerDataRead 서비스 노드 추가
+    power_data_read_service = Node(
+        package='tetra_gazebo_sim',
+        executable='power_data_read_service.py',
+        name='power_data_read_service',
+        output='screen',
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]
+    )
+
     return LaunchDescription([
         # Set environment variables first
         gz_resource_path,
@@ -218,4 +227,5 @@ def generate_launch_description():
         spawn_robot,
         ros_gz_bridge,
         #fake_imu_publisher,
+        power_data_read_service,
     ])

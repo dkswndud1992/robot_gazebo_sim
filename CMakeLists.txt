@@ -7,13 +7,17 @@ endif()
 
 # Find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "interfaces/srv/PowerDataRead.srv"
+)
 
 # Install directories
 install(DIRECTORY
   launch
   worlds
   urdf
-  config
   params
   rviz
   meshes
@@ -23,6 +27,7 @@ install(DIRECTORY
 # Install Python scripts
 install(PROGRAMS
   scripts/fake_imu_publisher.py
+  scripts/power_data_read_service.py
   DESTINATION lib/${PROJECT_NAME}/
 )
 
@@ -31,4 +36,5 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+ament_export_dependencies(rosidl_default_runtime)
 ament_package()
