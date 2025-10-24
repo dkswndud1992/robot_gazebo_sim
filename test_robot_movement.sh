@@ -9,7 +9,7 @@ source /opt/ros/jazzy/setup.bash
 source ~/ros2_ws/install/setup.bash
 
 echo "1. Gazebo 시뮬레이션 시작..."
-ros2 launch tetra_gazebo_sim gazebo_sim.launch.py > /tmp/robot_move_test.log 2>&1 &
+ros2 launch robot_gazebo_sim gazebo_sim.launch.py > /tmp/robot_move_test.log 2>&1 &
 GAZEBO_PID=$!
 echo "   PID: $GAZEBO_PID"
 

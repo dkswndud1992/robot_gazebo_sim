@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.10">
-  <world name="tetra_empty_world">
+  <world name="robot_empty_world">
     
     <!-- Physics settings -->
     <physics name="1ms" type="ignored">

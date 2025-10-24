@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<robot name="tetra" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Define a number of dimensions using properties -->
   <xacro:property name="base_length" value="0.473" />
@@ -17,8 +17,8 @@
   </xacro:macro>
 
    <!-- Include all component files -->
-   <xacro:include filename="$(find tetra_gazebo_sim)/urdf/materials.urdf.xacro" />
-   <xacro:include filename="$(find tetra_gazebo_sim)/urdf/base.urdf.xacro" /> 
+   <xacro:include filename="$(find robot_gazebo_sim)/urdf/materials.urdf.xacro" />
+   <xacro:include filename="$(find robot_gazebo_sim)/urdf/base.urdf.xacro" /> 
    
    <!-- Add the base and wheels -->
    <base name="base" color="black"/>

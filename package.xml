@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>tetra_gazebo_sim</name>
+  <name>robot_gazebo_sim</name>
   <version>1.0.0</version>
-  <description>Gazebo simulation package for TETRA robot</description>
+  <description>Gazebo simulation package for mobile robot</description>
   
-  <maintainer email="tetra@hyulim.com">TETRA Team</maintainer>
+  <maintainer email="jyahn0302@gmail.com">johny</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

@@ -1,13 +1,12 @@
-# TETRA 가제보 시뮬레이션 문제 해결 가이드
+# 로봇 가제보 시뮬레이션 문제 해결 가이드
 
 ## 현재 상태
 - ✅ Gazebo Harmonic 설치 완료 (v8.9.0)
 - ✅ ROS2 Jazzy 환경 구성 완료
-- ✅ tetra_gazebo_sim 패키지 빌드 성공
+- ✅ robot_gazebo_sim 패키지 빌드 성공
 - ✅ Gazebo 서버 및 GUI 실행 성공
 - ✅ 로봇 스폰 성공 ("Entity creation successful")
 - ✅ ROS2 토픽 브리지 작동 (8/8 토픽)
-- ❌ 로봇이 Gazebo GUI에서 보이지 않음
 
 ## 문제 원인
 
@@ -19,14 +18,14 @@ Warning [Utils.cc:115] Non-unique name[front_bumper] detected 2 times in XML
 [Err] [UserCommands.cc:1152] Error Code 2: Msg: frame with name[camera] already exists.
 ```
 
-**원인**: `tetra.xacro`에서 이미 정의된 링크들이 중복 생성되고 있음
+**원인**: `robot.xacro`에서 이미 정의된 링크들이 중복 생성되고 있음
 
 **수정 완료**:
 - `camera_joint`, `front_bumper_joint`, `camera1_joint`로 조인트 이름 변경
-- `/home/tetra/ros2_ws/src/tetra_description/urdf/tetra.xacro` 파일 수정됨
+- `/home/robot/ros2_ws/src/robot_description/urdf/robot.xacro` 파일 수정됨
 
 ### 2. STL 메시 파일 로딩
-- 메시 파일들이 존재함 (/home/tetra/ros2_ws/src/tetra_description/meshes/)
+- 메시 파일들이 존재함 (/home/robot/ros2_ws/src/robot_description/meshes/)
 - install 디렉토리에도 복사됨
 - 하지만 Gazebo에서 로딩 확인 필요
 
@@ -37,15 +36,15 @@ Warning [Utils.cc:115] Non-unique name[front_bumper] detected 2 times in XML
 ```bash
 cd ~/ros2_ws
 source /opt/ros/jazzy/setup.bash
-colcon build --packages-select tetra_description tetra_gazebo_sim --symlink-install
+colcon build --packages-select robot_description robot_gazebo_sim --symlink-install
 source install/setup.bash
-ros2 launch tetra_gazebo_sim gazebo_sim.launch.py
+ros2 launch robot_gazebo_sim gazebo_sim.launch.py
 ```
 
 ### 방법 2: Gazebo GUI에서 직접 확인
 
 1. Gazebo 실행 후 왼쪽 Entity Tree 패널 확인
-2. `tetra_gazebo` 모델이 있는지 확인
+2. `robot_gazebo` 모델이 있는지 확인
 3. 모델 선택 후 Component Inspector에서 Pose 확인 (0, 0, 0.1 예상)
 4. View → Frames 활성화하여 프레임 시각화
 5. View → Collisions 활성화하여 충돌 영역 확인
@@ -69,26 +68,26 @@ gz model --spawn-file=/opt/ros/jazzy/share/gazebo_plugins/models/box.sdf --model
 gz topic -e -t /gazebo/resource_paths
 
 # 패키지 경로 확인
-ros2 pkg prefix tetra_description
+ros2 pkg prefix robot_description
 
 # 메시 파일 존재 확인
-ls -la $(ros2 pkg prefix tetra_description)/share/tetra_description/meshes/
+ls -la $(ros2 pkg prefix robot_description)/share/robot_description/meshes/
 ```
 
 ## 추가 디버깅
 
 ### 로그 레벨 높여서 실행
 ```bash
-ros2 launch tetra_gazebo_sim gazebo_sim.launch.py --log-level debug
+ros2 launch robot_gazebo_sim gazebo_sim.launch.py --log-level debug
 ```
 
 ### URDF를 SDF로 변환하여 확인
 ```bash
 cd ~/ros2_ws
 source install/setup.bash
-xacro src/tetra_gazebo_sim/urdf/tetra_gazebo.xacro > /tmp/tetra.urdf
-gz sdf -p /tmp/tetra.urdf > /tmp/tetra.sdf
-cat /tmp/tetra.sdf | less
+xacro src/robot_gazebo_sim/urdf/robot_gazebo.xacro > /tmp/robot.urdf
+gz sdf -p /tmp/robot.urdf > /tmp/robot.sdf
+cat /tmp/robot.sdf | less
 ```
 
 ### Gazebo 명령어로 모델 정보 확인
@@ -97,10 +96,10 @@ cat /tmp/tetra.sdf | less
 gz model --list
 
 # 특정 모델 정보
-gz model --info --model tetra_gazebo
+gz model --info --model robot_gazebo
 
 # 모델 위치
-gz model --pose --model tetra_gazebo
+gz model --pose --model robot_gazebo
 ```
 
 ## 예상 문제점들

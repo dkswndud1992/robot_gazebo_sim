@@ -9,7 +9,7 @@ source /opt/ros/jazzy/setup.bash
 source ~/ros2_ws/install/setup.bash
 
 echo "1. Fake IMU Publisher 시작..."
-ros2 run tetra_gazebo_sim fake_imu_publisher.py > /tmp/fake_imu.log 2>&1 &
+ros2 run robot_gazebo_sim fake_imu_publisher.py > /tmp/fake_imu.log 2>&1 &
 IMU_PID=$!
 echo "   PID: $IMU_PID"
 

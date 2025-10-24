@@ -13,21 +13,21 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     
     # Get package paths
-    tetra_gazebo_sim_path = get_package_share_directory('tetra_gazebo_sim')
+    robot_gazebo_sim_path = get_package_share_directory('robot_gazebo_sim')
     
     # Set Gazebo resource path to find meshes
     # Gazebo Harmonic looks for model://package_name structure
-    # We need to provide the parent of 'share' directory (install/tetra_gazebo_sim)
-    # So that Gazebo can find: install/tetra_gazebo_sim/share/tetra_gazebo_sim/meshes
-    install_base = os.path.dirname(os.path.dirname(tetra_gazebo_sim_path))  # .../install
-    pkg_parent = os.path.dirname(tetra_gazebo_sim_path)  # .../install/tetra_gazebo_sim/share
+    # We need to provide the parent of 'share' directory (install/robot_gazebo_sim)
+    # So that Gazebo can find: install/robot_gazebo_sim/share/robot_gazebo_sim/meshes
+    install_base = os.path.dirname(os.path.dirname(robot_gazebo_sim_path))  # .../install
+    pkg_parent = os.path.dirname(robot_gazebo_sim_path)  # .../install/robot_gazebo_sim/share
     
     gz_resource_path = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
         value=':'.join([
             install_base,
             pkg_parent,
-            tetra_gazebo_sim_path,
+            robot_gazebo_sim_path,
             os.environ.get('GZ_SIM_RESOURCE_PATH', '')
         ])
     )
@@ -42,16 +42,16 @@ def generate_launch_description():
     world_file_arg = DeclareLaunchArgument(
         'world_file',
         default_value=PathJoinSubstitution([
-            FindPackageShare('tetra_gazebo_sim'),
+            FindPackageShare('robot_gazebo_sim'),
             'worlds',
-            'tetra_office.sdf'
+            'robot_office.sdf'
         ]),
         description='Path to the Gazebo world file'
     )
 
     robot_name_arg = DeclareLaunchArgument(
         'robot_name',
-        default_value='tetra',
+        default_value='robot',
         description='Name of the robot'
     )
 
@@ -102,9 +102,9 @@ def generate_launch_description():
             'robot_description': Command([
                 'xacro ',
                 PathJoinSubstitution([
-                    FindPackageShare('tetra_gazebo_sim'),
+                    FindPackageShare('robot_gazebo_sim'),
                     'urdf',
-                    'tetra_gazebo.xacro'
+                    'robot_gazebo.xacro'
                 ])
             ])
         }]
@@ -157,9 +157,9 @@ def generate_launch_description():
             '/tf@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V',
             '/tf_static@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V',
             # cmd_vel: Bidirectional (use ] for bidirectional bridge)
-            '/model/tetra/cmd_vel@geometry_msgs/msg/Twist]ignition.msgs.Twist',
+            '/model/robot/cmd_vel@geometry_msgs/msg/Twist]ignition.msgs.Twist',
             # All others: Gazebo -> ROS (use @ for unidirectional Gazebo to ROS)
-            '/model/tetra/odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
+            '/model/robot/odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
             '/scan@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
             #'/scan2@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
             '/imu@sensor_msgs/msg/Imu@ignition.msgs.IMU',
@@ -170,8 +170,8 @@ def generate_launch_description():
             '/clock@rosgraph_msgs/msg/Clock@ignition.msgs.Clock'
         ],
         remappings=[
-            ('/model/tetra/odometry', '/odom'),
-            ('/model/tetra/cmd_vel', '/cmd_vel')
+            ('/model/robot/odometry', '/odom'),
+            ('/model/robot/cmd_vel', '/cmd_vel')
         ],
         output='screen',
         parameters=[{
@@ -181,7 +181,7 @@ def generate_launch_description():
 
     # Fake IMU publisher (사용 시 활성화)
     fake_imu_publisher = Node(
-        package='tetra_gazebo_sim',
+        package='robot_gazebo_sim',
         executable='fake_imu_publisher.py',
         name='fake_imu_publisher',
         output='screen',
@@ -193,7 +193,7 @@ def generate_launch_description():
 
     # PowerDataRead 서비스 노드 추가
     power_data_read_service = Node(
-        package='tetra_gazebo_sim',
+        package='robot_gazebo_sim',
         executable='power_data_read_service.py',
         name='power_data_read_service',
         output='screen',

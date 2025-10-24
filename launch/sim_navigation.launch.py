@@ -40,38 +40,38 @@ def generate_launch_description():
     )
 
     nav2_navigation_launch_path = os.path.join(
-        get_package_share_directory('tetra_navigation2'),
+        get_package_share_directory('robot_navigation2'),
         'launch',
         'navigation_launch.py'
     )
 
     nav2_localization_launch_path = os.path.join(
-        get_package_share_directory('tetra_navigation2'),
+        get_package_share_directory('robot_navigation2'),
         'launch',
         'localization_launch.py'
     )
 
     slam_params_path = PathJoinSubstitution([
-        FindPackageShare('tetra_gazebo_sim'),
+        FindPackageShare('robot_gazebo_sim'),
         'params',
         'slam_toolbox_sim.yaml'
     ])
 
     localization_params_path = PathJoinSubstitution([
-        FindPackageShare('tetra_gazebo_sim'),
+        FindPackageShare('robot_gazebo_sim'),
         'params',
         'amcl_localization_sim.yaml'
     ])
 
     navigation_params_path = PathJoinSubstitution([
-        FindPackageShare('tetra_gazebo_sim'),
+        FindPackageShare('robot_gazebo_sim'),
         'params',
         'navigation_sim.yaml'
     ])
 
     # Dynamically constructed paths
     map_file_path = PathJoinSubstitution([
-        FindPackageShare('tetra_navigation2'), 'maps', LaunchConfiguration('map_name')
+        FindPackageShare('robot_navigation2'), 'maps', LaunchConfiguration('map_name')
     ])
 
     # SLAM launch (for simulation)

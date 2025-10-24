@@ -1,31 +1,31 @@
 #!/bin/bash
 
-# TETRA Gazebo Simulation Test Script
+# Robot Gazebo Simulation Test Script
 # 가제보 시뮬레이션 패키지 테스트 스크립트
 
 echo "========================================="
-echo "TETRA Gazebo Simulation Test"
+echo "Robot Gazebo Simulation Test"
 echo "========================================="
 echo ""
 
 # 환경 설정
 source /opt/ros/jazzy/setup.bash
 source ~/ros2_ws/install/setup.bash
-source ~/test/tetra_gazebo_sim/install/setup.bash
+source ~/test/robot_gazebo_sim/install/setup.bash
 
 # 1. 패키지 확인
 echo "1. 패키지 확인 중..."
-if ros2 pkg prefix tetra_gazebo_sim > /dev/null 2>&1; then
-    echo "   ✅ tetra_gazebo_sim 패키지 발견"
+if ros2 pkg prefix robot_gazebo_sim > /dev/null 2>&1; then
+    echo "   ✅ robot_gazebo_sim 패키지 발견"
 else
-    echo "   ❌ tetra_gazebo_sim 패키지를 찾을 수 없습니다"
+    echo "   ❌ robot_gazebo_sim 패키지를 찾을 수 없습니다"
     exit 1
 fi
 
 # 2. Launch 파일 확인
 echo ""
 echo "2. Launch 파일 확인 중..."
-LAUNCH_DIR=$(ros2 pkg prefix tetra_gazebo_sim)/share/tetra_gazebo_sim/launch
+LAUNCH_DIR=$(ros2 pkg prefix robot_gazebo_sim)/share/robot_gazebo_sim/launch
 if [ -d "$LAUNCH_DIR" ]; then
     echo "   ✅ Launch 디렉토리 존재: $LAUNCH_DIR"
     echo "   파일 목록:"
@@ -37,23 +37,23 @@ fi
 # 3. URDF 파일 확인
 echo ""
 echo "3. URDF 파일 확인 중..."
-URDF_DIR=$(ros2 pkg prefix tetra_gazebo_sim)/share/tetra_gazebo_sim/urdf
-if [ -f "$URDF_DIR/tetra_gazebo.xacro" ]; then
-    echo "   ✅ tetra_gazebo.xacro 파일 존재"
+URDF_DIR=$(ros2 pkg prefix robot_gazebo_sim)/share/robot_gazebo_sim/urdf
+if [ -f "$URDF_DIR/robot_gazebo.xacro" ]; then
+    echo "   ✅ robot_gazebo.xacro 파일 존재"
     # xacro 파일 처리 테스트
-    if xacro $URDF_DIR/tetra_gazebo.xacro > /dev/null 2>&1; then
+    if xacro $URDF_DIR/robot_gazebo.xacro > /dev/null 2>&1; then
         echo "   ✅ xacro 파일 처리 성공"
     else
         echo "   ⚠️  xacro 파일 처리 중 경고/오류 발생"
     fi
 else
-    echo "   ❌ tetra_gazebo.xacro 파일을 찾을 수 없습니다"
+    echo "   ❌ robot_gazebo.xacro 파일을 찾을 수 없습니다"
 fi
 
 # 4. World 파일 확인
 echo ""
 echo "4. World 파일 확인 중..."
-WORLD_DIR=$(ros2 pkg prefix tetra_gazebo_sim)/share/tetra_gazebo_sim/worlds
+WORLD_DIR=$(ros2 pkg prefix robot_gazebo_sim)/share/robot_gazebo_sim/worlds
 if [ -d "$WORLD_DIR" ]; then
     echo "   ✅ Worlds 디렉토리 존재"
     echo "   파일 목록:"
@@ -66,7 +66,7 @@ fi
 echo ""
 echo "5. Gazebo 시뮬레이션 실행 테스트..."
 echo "   Gazebo를 백그라운드로 실행합니다..."
-ros2 launch tetra_gazebo_sim gazebo_sim.launch.py > /tmp/gazebo_test.log 2>&1 &
+ros2 launch robot_gazebo_sim gazebo_sim.launch.py > /tmp/gazebo_test.log 2>&1 &
 GAZEBO_PID=$!
 echo "   PID: $GAZEBO_PID"
 
@@ -175,7 +175,7 @@ if [ ${#MISSING[@]} -eq 0 ] && [ $FOUND -eq ${#EXPECTED_TOPICS[@]} ]; then
     echo ""
     echo "Gazebo 시뮬레이션이 정상적으로 작동합니다."
     echo "다음 명령어로 실행할 수 있습니다:"
-    echo "  ros2 launch tetra_gazebo_sim gazebo_sim.launch.py"
+    echo "  ros2 launch robot_gazebo_sim gazebo_sim.launch.py"
 else
     echo "⚠️  일부 테스트 실패"
     echo ""

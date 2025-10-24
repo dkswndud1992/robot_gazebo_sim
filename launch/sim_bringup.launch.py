@@ -21,9 +21,9 @@ def generate_launch_description():
     world_file_arg = DeclareLaunchArgument(
         'world_file',
         default_value=PathJoinSubstitution([
-            FindPackageShare('tetra_gazebo_sim'),
+            FindPackageShare('robot_gazebo_sim'),
             'worlds',
-            'tetra_office.sdf'
+            'robot_office.sdf'
         ]),
         description='Path to the Gazebo world file'
     )
@@ -32,7 +32,7 @@ def generate_launch_description():
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
-                FindPackageShare('tetra_gazebo_sim'),
+                FindPackageShare('robot_gazebo_sim'),
                 'launch',
                 'gazebo_sim.launch.py'
             ])
@@ -51,7 +51,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             PathJoinSubstitution([
-                FindPackageShare('tetra_gazebo_sim'),
+                FindPackageShare('robot_gazebo_sim'),
                 'params',
                 'ekf_sim.yaml'
             ]),

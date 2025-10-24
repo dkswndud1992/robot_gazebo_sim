@@ -20,7 +20,7 @@ def generate_launch_description():
     rviz_config_arg = DeclareLaunchArgument(
         'rviz_config',
         default_value=PathJoinSubstitution([
-            FindPackageShare('tetra_gazebo_sim'),
+            FindPackageShare('robot_gazebo_sim'),
             'rviz',
             'sim_config.rviz'
         ]),

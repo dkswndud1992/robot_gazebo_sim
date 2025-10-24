@@ -1,22 +1,22 @@
-# Copilot Instructions for TETRA Gazebo Simulation
+# Copilot Instructions for Robot Gazebo Simulation
 
 ## Overview
-This repository provides a complete Gazebo Harmonic simulation environment for the TETRA robot using ROS2 Jazzy. It integrates robot models, launch files, world definitions, and parameter configurations for rapid simulation, testing, and development.
+This repository provides a complete Gazebo Harmonic simulation environment for the mobile robot using ROS2 Jazzy. It integrates robot models, launch files, world definitions, and parameter configurations for rapid simulation, testing, and development.
 
 ## Key Architecture & Components
 - **Launch Files (`launch/`)**: Python-based ROS2 launch files orchestrate simulation, navigation, and full-system bringup. Key files:
   - `gazebo_sim.launch.py`: Basic simulation (robot + world)
   - `sim_bringup.launch.py`: Adds EKF, joystick, web interface
   - `full_sim.launch.py`: Full stack (SLAM, Nav2, RViz)
-- **Robot Models (`urdf/`)**: Xacro-based URDFs define robot structure, sensors, and plugins. Edit `tetra_gazebo.xacro` for physical/sensor changes.
+- **Robot Models (`urdf/`)**: Xacro-based URDFs define robot structure, sensors, and plugins. Edit `robot_gazebo.xacro` for physical/sensor changes.
 - **Worlds (`worlds/`)**: SDF files for simulation environments. Add or modify for custom scenarios.
 - **Parameters (`params/`)**: YAML files for EKF, SLAM, navigation, etc.
-- **Bridging**: Uses `ros_gz_bridge` to map Gazebo topics (e.g., `/model/tetra/cmd_vel`) to ROS2 topics (e.g., `/cmd_vel`).
+- **Bridging**: Uses `ros_gz_bridge` to map Gazebo topics (e.g., `/model/robot/cmd_vel`) to ROS2 topics (e.g., `/cmd_vel`).
 
 ## Developer Workflows
-- **Build**: Use `colcon build --packages-select tetra_gazebo_sim` from your ROS2 workspace root.
+- **Build**: Use `colcon build --packages-select robot_gazebo_sim` from your ROS2 workspace root.
 - **Source**: Always source both ROS2 and workspace setup scripts before running (`source /opt/ros/jazzy/setup.bash && source install/setup.bash`).
-- **Simulation**: Launch with `ros2 launch tetra_gazebo_sim gazebo_sim.launch.py`. For full navigation, use `full_sim.launch.py`.
+- **Simulation**: Launch with `ros2 launch robot_gazebo_sim gazebo_sim.launch.py`. For full navigation, use `full_sim.launch.py`.
 - **Testing**: Use provided shell scripts (e.g., `test_simulation.sh`) or publish to `/cmd_vel` to verify movement. Always ensure Gazebo is unpaused (press ▶️ in GUI).
 - **Debugging**: Check topic bridges, odometry, and Gazebo logs. See README for troubleshooting common issues (e.g., robot not moving, mesh not found).
 
@@ -27,17 +27,17 @@ This repository provides a complete Gazebo Harmonic simulation environment for t
 - **z_pose Guidance**: Default robot spawn height is 0.055m (wheel radius + margin). Adjust via launch args if robot floats or sinks.
 
 ## Integration & Extensibility
-- **Add sensors**: Edit `urdf/tetra_gazebo.xacro` and update launch/bridge as needed.
+- **Add sensors**: Edit `urdf/robot_gazebo.xacro` and update launch/bridge as needed.
 - **New worlds**: Place `.sdf` in `worlds/` and set `world_file` launch arg.
 - **Navigation tuning**: Edit `params/navigation_sim.yaml`.
 
 ## External Dependencies
 - **ROS2 Jazzy** and **Gazebo Harmonic** (Ubuntu 24.04)
 - System packages: `ros-jazzy-ros-gz-sim`, `ros-jazzy-ros-gz-bridge`, `ros-jazzy-navigation2`, etc. (see README)
-- Workspace packages: `tetra_description`, `tetra_navigation2`, `tetra_interface`
+- Workspace packages: `robot_description`, `robot_navigation2`, `robot_interface`
 
 ## Examples
-- Launch simulation: `ros2 launch tetra_gazebo_sim gazebo_sim.launch.py`
+- Launch simulation: `ros2 launch robot_gazebo_sim gazebo_sim.launch.py`
 - Publish velocity: `ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.2}, angular: {z: 0.0}}" --once`
 - Save SLAM map: `ros2 run nav2_map_server map_saver_cli -f ~/my_map`
 

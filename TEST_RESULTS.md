@@ -1,4 +1,4 @@
-# TETRA Gazebo Simulation - 테스트 결과
+# Robot Gazebo Simulation - 테스트 결과
 
 ## 테스트 일시
 2025년 10월 1일
@@ -13,7 +13,7 @@
 ### ✅ 성공한 항목
 
 #### 1. 패키지 구성
-- ✅ tetra_gazebo_sim 패키지 정상 설치
+- ✅ robot_gazebo_sim 패키지 정상 설치
 - ✅ Launch 파일 5개 모두 존재
   - gazebo_sim.launch.py
   - sim_bringup.launch.py
@@ -22,11 +22,11 @@
   - rviz_sim.launch.py
 
 #### 2. 파일 구조
-- ✅ URDF 파일 (tetra_gazebo.xacro) 정상
+- ✅ URDF 파일 (robot_gazebo.xacro) 정상
 - ✅ xacro 파일 처리 성공
 - ✅ World 파일 2개 존재
   - empty_world.sdf
-  - tetra_office.sdf
+  - robot_office.sdf
 
 #### 3. Gazebo 실행
 - ✅ Gazebo Sim Server v8.9.0 정상 시작
@@ -59,7 +59,7 @@
 [Err] [UserCommands.cc:1152] Error Code 2: Msg: frame with name[front_bumper] already exists.
 ```
 
-**원인**: `tetra.xacro`에서 일부 링크가 중복 정의됨
+**원인**: `robot.xacro`에서 일부 링크가 중복 정의됨
 
 **영향**: 
 - 로봇 스폰에 영향 없음
@@ -67,7 +67,7 @@
 - 일부 프레임만 중복 경고 발생
 
 **해결 방법**: 
-- `tetra_description/urdf/tetra.xacro` 파일에서 중복 링크 정의 제거 필요
+- `robot_description/urdf/robot.xacro` 파일에서 중복 링크 정의 제거 필요
 - 현재 상태에서도 사용 가능
 
 ### 센서 데이터 타임아웃
@@ -80,7 +80,7 @@
 
 ### 1. 기본 시뮬레이션 테스트
 ```bash
-ros2 launch tetra_gazebo_sim gazebo_sim.launch.py
+ros2 launch robot_gazebo_sim gazebo_sim.launch.py
 ```
 **결과**: ✅ 성공
 
@@ -113,7 +113,7 @@ ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.1}, angular: {z:
 
 ### ✅ 최종 평가: 성공
 
-TETRA Gazebo 시뮬레이션 패키지가 정상적으로 작동합니다.
+Robot Gazebo 시뮬레이션 패키지가 정상적으로 작동합니다.
 
 **주요 기능**:
 - ✅ Gazebo Harmonic 통합 완료
@@ -137,7 +137,7 @@ TETRA Gazebo 시뮬레이션 패키지가 정상적으로 작동합니다.
 cd ~/ros2_ws
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
-ros2 launch tetra_gazebo_sim gazebo_sim.launch.py
+ros2 launch robot_gazebo_sim gazebo_sim.launch.py
 ```
 
 ### 다른 터미널에서 제어
@@ -165,7 +165,7 @@ ros2 topic echo /odom
 
 자동화된 테스트를 실행하려면:
 ```bash
-~/ros2_ws/src/tetra_gazebo_sim/test_simulation.sh
+~/ros2_ws/src/robot_gazebo_sim/test_simulation.sh
 ```
 
 ---

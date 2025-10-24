@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<robot name="tetra" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Define a number of dimensions using properties -->
   <xacro:property name="base_length" value="0.6127" />
@@ -26,7 +26,7 @@
   <visual>
     <origin xyz=" 0 ${-1.0*wheel_offset_y} 0 " rpy="0 0 0" />
 	<geometry>
-	  <mesh filename="package://tetra_gazebo_sim/meshes/wheel_drive_left.stl" scale="0.001 0.001 0.001" />
+	  <mesh filename="package://robot_gazebo_sim/meshes/wheel_drive_left.stl" scale="0.001 0.001 0.001" />
 	</geometry>
 	<material name="darkgrey"/>
   </visual>
@@ -54,7 +54,7 @@
   <visual>
     <origin xyz=" 0 ${wheel_offset_y} 0 " rpy="0 0 0" />
 	<geometry>
-	  <mesh filename="package://tetra_gazebo_sim/meshes/wheel_drive_right.stl" scale="0.001 0.001 0.001" />
+	  <mesh filename="package://robot_gazebo_sim/meshes/wheel_drive_right.stl" scale="0.001 0.001 0.001" />
 	</geometry>
 	<material name="darkgrey"/>
   </visual>
@@ -78,7 +78,7 @@
     <origin xyz=" 0 0 0 " rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://tetra_gazebo_sim/meshes/platform_body.stl" scale="0.001 0.001 0.001" />
+          filename="package://robot_gazebo_sim/meshes/platform_body.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <material name="black"/>        
     </visual>
@@ -117,7 +117,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://tetra_gazebo_sim/meshes/caster_yoke.stl" scale="0.001 0.001 0.001" />
+                    <mesh filename="package://robot_gazebo_sim/meshes/caster_yoke.stl" scale="0.001 0.001 0.001" />
                 </geometry>
                 <material name="darkgrey" />
             </visual>
@@ -146,7 +146,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://tetra_gazebo_sim/meshes/caster_wheel.stl" scale="0.001 0.001 0.001" />
+                    <mesh filename="package://robot_gazebo_sim/meshes/caster_wheel.stl" scale="0.001 0.001 0.001" />
                 </geometry>
                 <material name="darkgrey" />
             </visual>

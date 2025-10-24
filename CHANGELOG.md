@@ -1,11 +1,11 @@
-# Changelog - TETRA Gazebo Simulation
+# Changelog - Robot Gazebo Simulation
 
 ## 2025-10-01 - 로봇 물리 시뮬레이션 개선
 
 ### 수정사항
 
 #### 1. 바퀴 Joint 타입 변경 (Fixed → Continuous)
-**파일**: `tetra_description/urdf/base.urdf.xacro`
+**파일**: `robot_description/urdf/base.urdf.xacro`
 
 - 좌측 바퀴 (`base_l_wheel_joint`): `fixed` → `continuous`
 - 우측 바퀴 (`base_r_wheel_joint`): `fixed` → `continuous`
@@ -53,7 +53,7 @@
 **이유**: 바퀴 회전 시 감쇠와 마찰 특성 정의
 
 #### 5. Launch 파일에 초기 자세 매개변수 추가
-**파일**: `tetra_gazebo_sim/launch/gazebo_sim.launch.py`
+**파일**: `robot_gazebo_sim/launch/gazebo_sim.launch.py`
 
 **새로운 매개변수**:
 - `z_pose`: 0.1 → 0.2 (기본값 증가)
@@ -97,12 +97,12 @@ arguments=[
 
 #### 기본 실행
 ```bash
-ros2 launch tetra_gazebo_sim gazebo_sim.launch.py
+ros2 launch robot_gazebo_sim gazebo_sim.launch.py
 ```
 
 #### 초기 위치/방향 지정
 ```bash
-ros2 launch tetra_gazebo_sim gazebo_sim.launch.py \
+ros2 launch robot_gazebo_sim gazebo_sim.launch.py \
     x_pose:=1.0 \
     y_pose:=2.0 \
     z_pose:=0.3 \
